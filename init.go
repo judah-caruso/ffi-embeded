@@ -1,3 +1,4 @@
+//go:generate go run lib/generate.go
 //go:build (freebsd || linux || windows || darwin) && (amd64 || arm64)
 
 package ffi
@@ -11,9 +12,18 @@ import (
 
 func init() {
 	name := fmt.Sprintf("%d-%s", time.Now().UnixNano(), libName)
-	path := filepath.Join(os.TempDir(), name)
+	tmp := os.TempDir()
+	if len(tmp) == 0 {
+		wd, err := os.Getwd()
+		if err != nil {
+			panic(err)
+		}
 
-	if err := os.WriteFile(path, libData, 0644); err != nil {
+		tmp = wd
+	}
+
+	path := filepath.Join(tmp, name)
+	if err := os.WriteFile(path, libData, 0666); err != nil {
 		panic(err)
 	}
 

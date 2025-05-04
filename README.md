@@ -17,38 +17,6 @@ You can use [purego](https://github.com/ebitengine/purego) to call C code withou
 - windows/amd64
 - windows/arm64
 
-### Software
-[libffi](https://github.com/libffi/libffi) is preinstalled on most distributions, because it also is a dependency of Python and Ruby. If not, you can install it explicitly:
-
-#### Arch Linux
-```sh
-sudo pacman -S libffi
-```
-
-#### Debian 12, Ubuntu 22.04, Ubuntu 24.04
-```sh
-sudo apt install libffi8
-```
-
-#### FreeBSD
-```sh
-pkg install libffi
-```
-Note: Use this `-gcflags="github.com/ebitengine/purego/internal/fakecgo=-std"` build flag when cross compiling or having CGO_ENABLED set to 0 (FreeBSD only).
-
-#### Windows
-You need a `libffi-8.dll` next to the executable/root folder of your project or inside C:\Windows\System32. If you don't want to build libffi from source, you can find this dll for example inside the [Windows embeddable package](https://www.python.org/downloads/windows/) of Python.
-
-#### macOS
-You can use [Homebrew](https://brew.sh/) to install libffi:
-```sh
-brew install libffi
-```
-Note: If dlopen can't find the libffi.8.dylib file, you can try setting this environment variable:
-```sh
-export DYLD_FALLBACK_LIBRARY_PATH=$DYLD_FALLBACK_LIBRARY_PATH:/opt/homebrew/opt/libffi/lib
-```
-
 ## Examples
 In this example we create our own library, which consists of two type definitions and one function:
 
