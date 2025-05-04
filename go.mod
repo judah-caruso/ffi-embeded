@@ -1,4 +1,4 @@
-module github.com/jupiterrider/ffi
+module github.com/judah-caruso/ffi-embeded
 
 go 1.18
 

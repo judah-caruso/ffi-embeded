@@ -11,7 +11,7 @@ import (
 
 	_ "embed"
 
-	"github.com/jupiterrider/ffi"
+	"github.com/judah-caruso/ffi-embeded"
 )
 
 type Texture struct {

@@ -3,22 +3,23 @@
 package ffi
 
 import (
-	"runtime"
+	"fmt"
+	"os"
+	"path/filepath"
+	"time"
 )
 
 func init() {
-	var filename string
+	name := fmt.Sprintf("%d-%s", time.Now().UnixNano(), libName)
+	path := filepath.Join(os.TempDir(), name)
 
-	switch runtime.GOOS {
-	case "freebsd", "linux":
-		filename = "libffi.so.8"
-	case "windows":
-		filename = "libffi-8.dll"
-	case "darwin":
-		filename = "libffi.8.dylib"
+	if err := os.WriteFile(path, libData, 0644); err != nil {
+		panic(err)
 	}
 
-	libffi, err := Load(filename)
+	defer os.Remove(path)
+
+	libffi, err := Load(path)
 	if err != nil {
 		panic(err)
 	}

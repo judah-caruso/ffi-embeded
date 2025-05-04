@@ -5,7 +5,7 @@ import (
 	"math"
 	"unsafe"
 
-	"github.com/jupiterrider/ffi"
+	"github.com/judah-caruso/ffi-embeded"
 )
 
 func ExamplePrepClosureLoc() {

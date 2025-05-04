@@ -7,7 +7,7 @@ import (
 	"math"
 	"runtime"
 
-	"github.com/jupiterrider/ffi"
+	"github.com/judah-caruso/ffi-embeded"
 )
 
 func main() {
