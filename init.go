@@ -4,35 +4,30 @@
 package ffi
 
 import (
-	"fmt"
 	"os"
-	"path/filepath"
-	"time"
 )
 
 func init() {
-	name := fmt.Sprintf("%d-%s", time.Now().UnixNano(), libName)
-	tmp := os.TempDir()
-	if len(tmp) == 0 {
-		wd, err := os.Getwd()
-		if err != nil {
-			panic(err)
-		}
-
-		tmp = wd
-	}
-
-	path := filepath.Join(tmp, name)
-	if err := os.WriteFile(path, libData, 0666); err != nil {
+	file, err := os.CreateTemp("", "*-"+libName)
+	if err != nil {
 		panic(err)
 	}
 
-	defer os.Remove(path)
+	path := file.Name()
+	if _, err := file.Write(libData); err != nil {
+		panic(err)
+	}
+
+	if err := file.Close(); err != nil {
+		panic(err)
+	}
 
 	libffi, err := Load(path)
 	if err != nil {
 		panic(err)
 	}
+
+	os.Remove(path)
 
 	prepCif, err = libffi.Get("ffi_prep_cif")
 	if err != nil {
